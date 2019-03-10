@@ -2,7 +2,6 @@ version : v1
 service:
   - name : 'aws-proxy'
   - type : REST
-  - database : MYSQL
   - replica : 3
   - storage : 35GB
   - ram : 8GB
