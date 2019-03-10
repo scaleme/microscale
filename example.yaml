@@ -6,7 +6,6 @@ service:
   - storage : 35GB
   - ram : 8GB
   - cpu : 4
-  - schema : './data/aws-proxy.sql'
   - auth: true
   - logging: true
   - example : true
