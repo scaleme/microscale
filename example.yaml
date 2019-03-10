@@ -1,0 +1,59 @@
+version : v1
+service:
+  - name : 'aws-proxy'
+  - type : REST
+  - database : MYSQL
+  - replica : 3
+  - storage : 35GB
+  - ram : 8GB
+  - cpu : 4
+  - schema : './data/aws-proxy.sql'
+  - auth: true
+  - logging: true
+  - example : true
+  - domain: aws-proxy.local
+  - protocol: https
+  - port : 8080
+  - monitoring : true
+  - helm : true
+  - cicd : true
+  - gitpod : true
+  - cicdProvide : BITBUCKET
+  - analytics: 
+      - new_relic
+  - envoy:
+    - ingress : 80
+    - egress : 8080
+    - log : true
+    - tracing : true
+database : 
+  - name : 'aws-proxy-db'
+  - type : NOSQL
+  - database : MONGO
+  - monitoring : true
+  - replica : 3
+  - storage : 35GB
+  - ram : 8GB
+  - cpu : 4
+  - schema : './data/'
+  - envoy:
+    - ingress : 80
+    - egress : 8080
+    - log : true
+    - tracing : true
+cache : 
+  - name : 'aws-proxy-cache'
+  - type : CACHE
+  - database : REDIS
+  - monitoring : true
+  - replica : 3
+  - storage : 35GB
+  - ram : 8GB
+  - cpu : 4
+  - schema : './data/'
+cloud : AWS
+env : ["dev","staging","qa"]
+k8s : 1.9
+language: go
+
+
