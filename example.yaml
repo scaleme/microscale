@@ -14,10 +14,10 @@ service:
   - port : 8080
   - monitoring : true
   - helm : true
-  - build : CIRCLECI
   - cicd : true
   - gitpod : true
   - cicdProvide : BITBUCKET
+  - language: go
   - analytics: 
       - new_relic
   - envoy:
@@ -25,6 +25,22 @@ service:
     - egress : 8080
     - log : true
     - tracing : true
+kafka : 
+  - name : 'source-of-truth'
+  - replica : 3
+  - schema : './data/kafka'
+  - monitoring : true
+  - replica : 3
+  - storage : 35GB
+  - ram : 8GB
+  - cpu : 4
+  - stream : 
+      - mongo :
+        - connector : MONGO
+        - schema : './data/kafka/mongo'
+      - redis :
+        - connector : REDIS
+        - schema : './data/kafka/redis'
 database : 
   - name : 'aws-proxy-db'
   - type : NOSQL
@@ -50,9 +66,20 @@ cache :
   - ram : 8GB
   - cpu : 4
   - schema : './data/'
+queue : 
+  - name : 'txn-queue'
+  - type : RABBITMQ
+  - port : 8080
+  - domain : 'txn-queue.local'
+  - queue_name : 'txn'
+  - replica : 3
+  - monitoring : true
+  - storage : 35GB
+  - ram : 8GB
+  - cpu : 4
 cloud : AWS
 env : ["dev","staging","qa"]
 k8s : 1.9
-language: go
+
 
 
